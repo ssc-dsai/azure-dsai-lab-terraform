@@ -1,0 +1,235 @@
+[0m# module.rg.azurerm_resource_group.main_rg:
+resource "azurerm_resource_group" "main_rg" {
+    [1m[0mid[0m[0m       = "/subscriptions/580c0ee7-91da-497a-b61b-1a12caecdd19/resourceGroups/ScSc-DSAI-Lab-dev-rg"
+    [1m[0mlocation[0m[0m = "canadacentral"
+    [1m[0mname[0m[0m     = "ScSc-DSAI-Lab-dev-rg"
+    [1m[0mtags[0m[0m     = {
+        "costcenter" = "666111"
+        "env"        = "dev"
+        "ssn"        = "DSAI"
+        "subowner"   = "CTOB-DE-DSAI"
+    }
+}
+
+
+
+# module.databricks.azurerm_databricks_workspace.workspace:
+resource "azurerm_databricks_workspace" "workspace" {
+    [1m[0mcustomer_managed_key_enabled[0m[0m      = false
+    [1m[0mid[0m[0m                                = "/subscriptions/580c0ee7-91da-497a-b61b-1a12caecdd19/resourceGroups/ScSc-DSAI-Lab-dev-rg/providers/Microsoft.Databricks/workspaces/ScScCPS-DSAI-Lab-dev-dbw"
+    [1m[0minfrastructure_encryption_enabled[0m[0m = false
+    [1m[0mlocation[0m[0m                          = "canadacentral"
+    [1m[0mmanaged_resource_group_id[0m[0m         = "/subscriptions/580c0ee7-91da-497a-b61b-1a12caecdd19/resourceGroups/databricks-rg-ScSc-DSAI-Lab-dev-rg"
+    [1m[0mmanaged_resource_group_name[0m[0m       = "databricks-rg-ScSc-DSAI-Lab-dev-rg"
+    [1m[0mname[0m[0m                              = "ScScCPS-DSAI-Lab-dev-dbw"
+    [1m[0mpublic_network_access_enabled[0m[0m     = true
+    [1m[0mresource_group_name[0m[0m               = "ScSc-DSAI-Lab-dev-rg"
+    [1m[0msku[0m[0m                               = "standard"
+    [1m[0mstorage_account_identity[0m[0m          = []
+    [1m[0mtags[0m[0m                              = {
+        "costcenter" = "666111"
+        "env"        = "dev"
+        "ssn"        = "DSAI"
+        "subowner"   = "CTOB-DE-DSAI"
+    }
+    [1m[0mworkspace_id[0m[0m                      = "1219360855249094"
+    [1m[0mworkspace_url[0m[0m                     = "adb-1219360855249094.14.azuredatabricks.net"
+
+    custom_parameters {
+        [1m[0mnat_gateway_name[0m[0m         = "nat-gateway"
+        [1m[0mno_public_ip[0m[0m             = false
+        [1m[0mpublic_ip_name[0m[0m           = "nat-gw-public-ip"
+        [1m[0mstorage_account_name[0m[0m     = "dbstoragesn62o4gjlw6uc"
+        [1m[0mstorage_account_sku_name[0m[0m = "Standard_GRS"
+        [1m[0mvnet_address_prefix[0m[0m      = "10.139"
+    }
+}
+
+# module.databricks.data.databricks_node_type.smallest:
+data "databricks_node_type" "smallest" {
+    [1m[0mid[0m[0m         = "Standard_F4s"
+    [1m[0mlocal_disk[0m[0m = true
+}
+
+# module.databricks.data.databricks_spark_version.latest_lts:
+data "databricks_spark_version" "latest_lts" {
+    [1m[0mbeta[0m[0m              = false
+    [1m[0mgenomics[0m[0m          = false
+    [1m[0mgpu[0m[0m               = false
+    [1m[0mid[0m[0m                = "9.1.x-scala2.12"
+    [1m[0mlatest[0m[0m            = true
+    [1m[0mlong_term_support[0m[0m = true
+    [1m[0mml[0m[0m                = false
+    [1m[0mphoton[0m[0m            = false
+    [1m[0mscala[0m[0m             = "2.12"
+}
+
+# module.databricks.databricks_cluster.shared_autoscaling:
+resource "databricks_cluster" "shared_autoscaling" {
+    [1m[0mautotermination_minutes[0m[0m      = 20
+    [1m[0mcluster_id[0m[0m                   = "1027-004622-aiimncfm"
+    [1m[0mcluster_name[0m[0m                 = "Cheapest"
+    [1m[0mdefault_tags[0m[0m                 = {
+        "ClusterId"   = "1027-004622-aiimncfm"
+        "ClusterName" = "Cheapest"
+        "Creator"     = "jeremie.st-pierrerobitaille@ssc-spc.gc.ca"
+        "Vendor"      = "Databricks"
+        "costcenter"  = "666111"
+        "env"         = "dev"
+        "ssn"         = "DSAI"
+        "subowner"    = "CTOB-DE-DSAI"
+    }
+    [1m[0mdriver_node_type_id[0m[0m          = "Standard_F4s"
+    [1m[0menable_elastic_disk[0m[0m          = true
+    [1m[0menable_local_disk_encryption[0m[0m = false
+    [1m[0mid[0m[0m                           = "1027-004622-aiimncfm"
+    [1m[0mis_pinned[0m[0m                    = false
+    [1m[0mnode_type_id[0m[0m                 = "Standard_F4s"
+    [1m[0mnum_workers[0m[0m                  = 0
+    [1m[0mspark_version[0m[0m                = "9.1.x-scala2.12"
+    [1m[0mstate[0m[0m                        = "TERMINATED"
+    [1m[0murl[0m[0m                          = "https://adb-1219360855249094.14.azuredatabricks.net/#setting/clusters/1027-004622-aiimncfm/configuration"
+
+    autoscale {
+        [1m[0mmax_workers[0m[0m = 2
+        [1m[0mmin_workers[0m[0m = 1
+    }
+
+    azure_attributes {
+        [1m[0mavailability[0m[0m       = "ON_DEMAND_AZURE"
+        [1m[0mfirst_on_demand[0m[0m    = 1
+        [1m[0mspot_bid_max_price[0m[0m = -1
+    }
+}
+
+
+# module.datalake.azurerm_storage_account.datalake:
+resource "azurerm_storage_account" "datalake" {
+    [1m[0maccess_tier[0m[0m                    = "Hot"
+    [1m[0maccount_kind[0m[0m                   = "StorageV2"
+    [1m[0maccount_replication_type[0m[0m       = "LRS"
+    [1m[0maccount_tier[0m[0m                   = "Standard"
+    [1m[0mallow_blob_public_access[0m[0m       = true
+    [1m[0menable_https_traffic_only[0m[0m      = true
+    [1m[0mid[0m[0m                             = "/subscriptions/580c0ee7-91da-497a-b61b-1a12caecdd19/resourceGroups/ScSc-DSAI-Lab-dev-rg/providers/Microsoft.Storage/storageAccounts/scsccsadsailabdevdls1"
+    [1m[0mis_hns_enabled[0m[0m                 = false
+    [1m[0mlocation[0m[0m                       = "canadacentral"
+    [1m[0mmin_tls_version[0m[0m                = "TLS1_0"
+    [1m[0mname[0m[0m                           = "scsccsadsailabdevdls1"
+    [1m[0mnfsv3_enabled[0m[0m                  = false
+    [1m[0mprimary_access_key[0m[0m             = (sensitive value)
+    [1m[0mprimary_blob_connection_string[0m[0m = (sensitive value)
+    [1m[0mprimary_blob_endpoint[0m[0m          = "https://scsccsadsailabdevdls1.blob.core.windows.net/"
+    [1m[0mprimary_blob_host[0m[0m              = "scsccsadsailabdevdls1.blob.core.windows.net"
+    [1m[0mprimary_connection_string[0m[0m      = (sensitive value)
+    [1m[0mprimary_dfs_endpoint[0m[0m           = "https://scsccsadsailabdevdls1.dfs.core.windows.net/"
+    [1m[0mprimary_dfs_host[0m[0m               = "scsccsadsailabdevdls1.dfs.core.windows.net"
+    [1m[0mprimary_file_endpoint[0m[0m          = "https://scsccsadsailabdevdls1.file.core.windows.net/"
+    [1m[0mprimary_file_host[0m[0m              = "scsccsadsailabdevdls1.file.core.windows.net"
+    [1m[0mprimary_location[0m[0m               = "canadacentral"
+    [1m[0mprimary_queue_endpoint[0m[0m         = "https://scsccsadsailabdevdls1.queue.core.windows.net/"
+    [1m[0mprimary_queue_host[0m[0m             = "scsccsadsailabdevdls1.queue.core.windows.net"
+    [1m[0mprimary_table_endpoint[0m[0m         = "https://scsccsadsailabdevdls1.table.core.windows.net/"
+    [1m[0mprimary_table_host[0m[0m             = "scsccsadsailabdevdls1.table.core.windows.net"
+    [1m[0mprimary_web_endpoint[0m[0m           = "https://scsccsadsailabdevdls1.z9.web.core.windows.net/"
+    [1m[0mprimary_web_host[0m[0m               = "scsccsadsailabdevdls1.z9.web.core.windows.net"
+    [1m[0mresource_group_name[0m[0m            = "ScSc-DSAI-Lab-dev-rg"
+    [1m[0msecondary_access_key[0m[0m           = (sensitive value)
+    [1m[0msecondary_connection_string[0m[0m    = (sensitive value)
+    [1m[0mshared_access_key_enabled[0m[0m      = true
+    [1m[0mtags[0m[0m                           = {
+        "costcenter" = "666111"
+        "env"        = "dev"
+        "ssn"        = "DSAI"
+        "subowner"   = "CTOB-DE-DSAI"
+    }
+
+    blob_properties {
+        [1m[0mchange_feed_enabled[0m[0m      = false
+        [1m[0mlast_access_time_enabled[0m[0m = false
+        [1m[0mversioning_enabled[0m[0m       = false
+    }
+
+    network_rules {
+        [1m[0mbypass[0m[0m                     = [
+            "AzureServices",
+        ]
+        [1m[0mdefault_action[0m[0m             = "Allow"
+        [1m[0mip_rules[0m[0m                   = []
+        [1m[0mvirtual_network_subnet_ids[0m[0m = []
+    }
+
+    queue_properties {
+
+        hour_metrics {
+            [1m[0menabled[0m[0m               = true
+            [1m[0minclude_apis[0m[0m          = true
+            [1m[0mretention_policy_days[0m[0m = 7
+            [1m[0mversion[0m[0m               = "1.0"
+        }
+
+        logging {
+            [1m[0mdelete[0m[0m                = false
+            [1m[0mread[0m[0m                  = false
+            [1m[0mretention_policy_days[0m[0m = 0
+            [1m[0mversion[0m[0m               = "1.0"
+            [1m[0mwrite[0m[0m                 = false
+        }
+
+        minute_metrics {
+            [1m[0menabled[0m[0m               = false
+            [1m[0minclude_apis[0m[0m          = false
+            [1m[0mretention_policy_days[0m[0m = 0
+            [1m[0mversion[0m[0m               = "1.0"
+        }
+    }
+
+    share_properties {
+
+        retention_policy {
+            [1m[0mdays[0m[0m = 7
+        }
+    }
+}
+
+
+# module.keyvault.azurerm_key_vault.keyvault:
+resource "azurerm_key_vault" "keyvault" {
+    [1m[0maccess_policy[0m[0m                   = []
+    [1m[0menable_rbac_authorization[0m[0m       = false
+    [1m[0menabled_for_deployment[0m[0m          = false
+    [1m[0menabled_for_disk_encryption[0m[0m     = false
+    [1m[0menabled_for_template_deployment[0m[0m = false
+    [1m[0mid[0m[0m                              = "/subscriptions/580c0ee7-91da-497a-b61b-1a12caecdd19/resourceGroups/ScSc-DSAI-Lab-dev-rg/providers/Microsoft.KeyVault/vaults/ScScCSV-DSAI-Lab-dev-kv"
+    [1m[0mlocation[0m[0m                        = "canadacentral"
+    [1m[0mname[0m[0m                            = "ScScCSV-DSAI-Lab-dev-kv"
+    [1m[0mpurge_protection_enabled[0m[0m        = false
+    [1m[0mresource_group_name[0m[0m             = "ScSc-DSAI-Lab-dev-rg"
+    [1m[0msku_name[0m[0m                        = "standard"
+    [1m[0msoft_delete_enabled[0m[0m             = true
+    [1m[0msoft_delete_retention_days[0m[0m      = 90
+    [1m[0mtags[0m[0m                            = {
+        "costcenter" = "666111"
+        "env"        = "dev"
+        "ssn"        = "DSAI"
+        "subowner"   = "CTOB-DE-DSAI"
+    }
+    [1m[0mtenant_id[0m[0m                       = "d05bc194-94bf-4ad6-ae2e-1db0f2e38f5e"
+    [1m[0mvault_uri[0m[0m                       = "https://scsccsv-dsai-lab-dev-kv.vault.azure.net/"
+
+    network_acls {
+        [1m[0mbypass[0m[0m                     = "AzureServices"
+        [1m[0mdefault_action[0m[0m             = "Allow"
+        [1m[0mip_rules[0m[0m                   = []
+        [1m[0mvirtual_network_subnet_ids[0m[0m = []
+    }
+}
+
+# module.keyvault.data.azurerm_client_config.current:
+data "azurerm_client_config" "current" {
+    [1m[0mclient_id[0m[0m       = "04b07795-8ddb-461a-bbee-02f9e1bf7b46"
+    [1m[0mid[0m[0m              = "2021-10-27 03:11:00.617051 +0000 UTC"
+    [1m[0mobject_id[0m[0m       = "a9cafadb-a88e-43c6-8955-3dd3db3b0270"
+    [1m[0msubscription_id[0m[0m = "580c0ee7-91da-497a-b61b-1a12caecdd19"
+    [1m[0mtenant_id[0m[0m       = "d05bc194-94bf-4ad6-ae2e-1db0f2e38f5e"
+}[0m[0m

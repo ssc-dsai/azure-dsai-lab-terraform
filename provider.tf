@@ -4,6 +4,10 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "2.82.0"
     }
+    databricks = {
+      source  = "databrickslabs/databricks"
+      version = "0.3.9"
+    }
   }
 }
 
@@ -14,3 +18,8 @@ provider "azurerm" {
     }
   }
 }
+
+provider "databricks" {
+  host = "https://adb-1219360855249094.14.azuredatabricks.net"
+}
+
