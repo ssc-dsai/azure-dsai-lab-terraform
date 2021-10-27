@@ -6,6 +6,6 @@ resource "azurerm_storage_account" "datalake" {
   account_replication_type = "LRS"
   account_kind             = "StorageV2"
   allow_blob_public_access = true
-
+  
   tags = var.tags
 }

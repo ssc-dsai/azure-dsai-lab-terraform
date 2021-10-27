@@ -1,4 +1,8 @@
-# output "databricks_workspace" {
-#   value       = azurerm_databricks_workspace.workspace
-#   description = "Databricks workspace"
+
+# output "databricks_tenant_id" {
+#   value = module.databricks_workspace.databricks_tenant_id
+# }
+
+# output "databricks_principal_id" {
+#   value = module.databricks_workspace.databricks_principal_id
 # }

@@ -1,0 +1,13 @@
+
+terraform {
+  required_providers {
+    databricks = {
+      source  = "databrickslabs/databricks"
+      version = "0.3.9"
+    }
+  }
+}
+
+provider "databricks" {
+  host = var.dbw_host_url
+}

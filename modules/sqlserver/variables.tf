@@ -4,7 +4,7 @@ variable "location" {
 }
 
 variable "name" {
-  description = "variable used to name the databricks workspace"
+  description = "variable used to name the key vault"
   type        = string
 }
 
@@ -15,5 +15,10 @@ variable "tags" {
 
 variable "resource_group_name" {
   description = "variable used to name the resource group"
+  type        = string
+}
+
+variable "keyvault_name" {
+  description = ""
   type        = string
 }

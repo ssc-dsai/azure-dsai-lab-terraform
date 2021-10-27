@@ -19,7 +19,4 @@ provider "azurerm" {
   }
 }
 
-provider "databricks" {
-  host = "https://adb-1219360855249094.14.azuredatabricks.net"
-}
 

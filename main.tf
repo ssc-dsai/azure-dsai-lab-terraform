@@ -38,7 +38,7 @@ module "databricks" {
     ssn        = var.ssn
     subowner   = var.subowner
   }
-  depends_on = [module.rg]
+
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -63,8 +63,6 @@ module "keyvault" {
 
 }
 
-
-
 # ---------------------------------------------------------------------------------------------------------------------
 # Data Lake Storage
 # ---------------------------------------------------------------------------------------------------------------------
@@ -85,5 +83,29 @@ module "datalake" {
   }
 
   depends_on = [module.rg]
+
+}
+
+# ---------------------------------------------------------------------------------------------------------------------
+# SQL Server
+# ---------------------------------------------------------------------------------------------------------------------
+
+
+module "sqlserver" {
+  source = "./modules/sqlserver"
+
+  name                = "${var.prefix_lc}csa${var.group_lc}${var.user_defined_lc}${var.env}dls1"
+  resource_group_name = module.rg.resource_group_name
+  location            = module.rg.resource_group_location
+  keyvault_name       = "${var.prefix}CSV-${var.group}-${var.user_defined}-${var.env}-kv"
+
+  tags = {
+    env        = var.env
+    costcenter = var.costcenter
+    ssn        = var.ssn
+    subowner   = var.subowner
+  }
+
+  depends_on = [module.rg, module.keyvault]
 
 }
