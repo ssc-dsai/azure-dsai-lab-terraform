@@ -31,7 +31,6 @@ module "databricks" {
   resource_group_name = module.rg.resource_group_name
   location            = module.rg.resource_group_location
 
-
   tags = {
     env        = var.env
     costcenter = var.costcenter
@@ -90,7 +89,6 @@ module "datalake" {
 # SQL Server
 # ---------------------------------------------------------------------------------------------------------------------
 
-
 module "sqlserver" {
   source = "./modules/sqlserver"
 
@@ -107,5 +105,30 @@ module "sqlserver" {
   }
 
   depends_on = [module.rg, module.keyvault]
+
+}
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Machine Learning Workspace
+# ---------------------------------------------------------------------------------------------------------------------
+
+module "mlworkspace" {
+  source = "./modules/mlworkspace"
+
+  workspace_name      = "${var.prefix}CPS-${var.group}-${var.user_defined}-${var.env}-mlw"
+  app_insights_name   = "${var.prefix_lc}cps${var.group_lc}${var.user_defined_lc}${var.env}mlw"
+  resource_group_name = module.rg.resource_group_name
+  location            = module.rg.resource_group_location
+  key_vault_id        = module.keyvault.key_vault_id
+  storage_account_id  = module.datalake.storage_account_id
+
+  tags = {
+    env        = var.env
+    costcenter = var.costcenter
+    ssn        = var.ssn
+    subowner   = var.subowner
+  }
+
+  depends_on = [module.rg, module.keyvault, module.datalake]
 
 }

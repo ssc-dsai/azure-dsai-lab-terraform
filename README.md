@@ -7,4 +7,4 @@
 * Key vault policies for Databricks - Check Later
 * Data Lake Store - Done
 * SQL Server - Done
-* ML Workspace
+* ML Workspace - Done

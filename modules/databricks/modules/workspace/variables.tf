@@ -17,3 +17,9 @@ variable "resource_group_name" {
   description = "variable used to name the resource group"
   type        = string
 }
+
+variable "prenium" {
+  description = "variable used to name the resource group"
+  type        = string
+  default = "premium"
+}
