@@ -7,29 +7,23 @@ resource "azurerm_key_vault" "keyvault" {
   sku_name            = "standard"
   tenant_id           = data.azurerm_client_config.current.tenant_id
   tags                = var.tags
-}
 
-resource "azurerm_key_vault_access_policy" "terraform" {
-  key_vault_id = azurerm_key_vault.keyvault.id
-  tenant_id    = azurerm_key_vault.keyvault.tenant_id
-  object_id    = data.azurerm_client_config.current.object_id
+  access_policy {
+    tenant_id = data.azurerm_client_config.current.tenant_id
+    object_id = data.azurerm_client_config.current.object_id
 
-  key_permissions = [
-    "get",
-    "list",
-    "create",
-    "decrypt",
-    "encrypt",
-    "sign",
-    "unwrapKey",
-    "verify",
-    "wrapKey",
-    "delete",
-    "restore",
-    "recover",
-    "update",
-    "purge",
-  ]
+    key_permissions = [
+      "Get",
+    ]
+
+    secret_permissions = [
+      "get", "backup", "delete", "list", "purge", "recover", "restore", "set",
+    ]
+
+    storage_permissions = [
+      "Get",
+    ]
+  }
 }
 
 resource "random_password" "password" {
@@ -42,19 +36,5 @@ resource "azurerm_key_vault_secret" "sql-admin-pwd-secret" {
   name         = "sql-admin-login-password"
   value        = random_password.password.result
   key_vault_id = azurerm_key_vault.keyvault.id
-
-
+  depends_on = [azurerm_key_vault.keyvault]
 }
-
-
-
-#TODO: look into this later
-# resource "azurerm_key_vault_access_policy" "dbw-akv-policy" {
-#   key_vault_id = azurerm_key_vault.keyvault.id
-#   tenant_id    = data.azurerm_client_config.current.tenant_id
-#   object_id    = var.object_id
-
-#   secret_permissions = [
-#     "Get", "List"
-#   ]
-# }

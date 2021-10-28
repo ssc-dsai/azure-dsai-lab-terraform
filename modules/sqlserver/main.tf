@@ -10,7 +10,7 @@ data "azurerm_key_vault_secret" "admin-login-pwd-secret" {
 }
 
 resource "azurerm_sql_server" "sqlserver" {
-  name                         = "mssqlserver"
+  name                         = var.name
   resource_group_name          = var.resource_group_name
   location                     = var.location
   version                      = "12.0"

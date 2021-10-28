@@ -94,7 +94,7 @@ module "datalake" {
 module "sqlserver" {
   source = "./modules/sqlserver"
 
-  name                = "${var.prefix_lc}csa${var.group_lc}${var.user_defined_lc}${var.env}dls1"
+  name                = "${var.prefix_lc}csa${var.group_lc}${var.user_defined_lc}${var.env}sql"
   resource_group_name = module.rg.resource_group_name
   location            = module.rg.resource_group_location
   keyvault_name       = "${var.prefix}CSV-${var.group}-${var.user_defined}-${var.env}-kv"
