@@ -2,7 +2,6 @@ variable "location" {
   description = "Azure region to use"
   type        = string
 }
-
 variable "name" {
   description = "variable used to name the databricks workspace"
   type        = string
@@ -18,8 +17,27 @@ variable "resource_group_name" {
   type        = string
 }
 
-variable "premium" {
-  description = "variable used to name the resource group"
-  type        = string
-  default = "premium"
+variable "key_vault_id" {
+    description = ""
+    type = string
+}
+
+variable "storage_account_name" {
+    description = ""
+    type = string
+}
+
+variable "csa_connection_string" {
+    description = ""
+    type = string
+}
+
+variable "sql_connection_string" {
+    description = ""
+    type = string
+}
+
+variable "secret_name" {
+  description = ""
+  type = string
 }

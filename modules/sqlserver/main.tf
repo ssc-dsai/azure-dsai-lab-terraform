@@ -24,3 +24,15 @@ resource "azurerm_sql_server" "sqlserver" {
   tags = var.tags
 }
 
+resource "azurerm_sql_database" "this" {
+  name                = var.database_name
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  server_name         = azurerm_sql_server.sqlserver.name
+
+  extended_auditing_policy {
+    retention_in_days                       = 7
+  }
+
+  tags = var.tags
+}

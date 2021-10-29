@@ -22,3 +22,8 @@ variable "keyvault_name" {
   description = ""
   type        = string
 }
+
+variable "database_name" {
+  description = ""
+  type = string
+}
