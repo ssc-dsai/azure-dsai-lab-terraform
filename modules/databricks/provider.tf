@@ -9,5 +9,5 @@ terraform {
 }
 
 provider "databricks" {
-  host = var.dbw_host_url
+  host = azurerm_databricks_workspace.this.workspace_url
 }

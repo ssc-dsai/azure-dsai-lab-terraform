@@ -11,7 +11,6 @@ resource "azurerm_data_factory" "this" {
   identity {
     type = "SystemAssigned"
   }
-
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -23,7 +22,7 @@ resource "azurerm_key_vault_access_policy" "this" {
   object_id    = azurerm_data_factory.this.identity.0.principal_id
 
   secret_permissions = [
-    "Get","List"
+    "Get", "List"
   ]
 }
 
@@ -39,15 +38,26 @@ resource "azurerm_data_factory_linked_service_key_vault" "this" {
   key_vault_id        = var.key_vault_id
 }
 
-resource "azurerm_data_factory_linked_service_azure_file_storage" "this" {
+resource "azurerm_data_factory_linked_service_azure_blob_storage" "this" {
   name                = "StorageAccountServiceLink"
   resource_group_name = var.resource_group_name
   data_factory_name   = azurerm_data_factory.this.name
   connection_string   = var.csa_connection_string
 }
 
-resource "azurerm_data_factory_linked_service_sql_server" "this" {
-  name                = "SQLServerServiceLink"
+# resource "azurerm_data_factory_linked_service_sql_server" "this" {
+#   name                = "SQLServerServiceLink"
+#   resource_group_name = var.resource_group_name
+#   data_factory_name   = azurerm_data_factory.this.name
+#   connection_string   = var.sql_connection_string
+#   key_vault_password {
+#     linked_service_name = azurerm_data_factory_linked_service_key_vault.this.name
+#     secret_name         = var.secret_name
+#   }
+# }
+
+resource "azurerm_data_factory_linked_service_azure_sql_database" "this" {
+  name                = "SQLDatabaseServiceLink"
   resource_group_name = var.resource_group_name
   data_factory_name   = azurerm_data_factory.this.name
   connection_string   = var.sql_connection_string

@@ -1,29 +1,44 @@
+variable "administrator_secret_name" {
+  description = "Specifies the name of the Key Vault Secret."
+  type = string
+}
+
+variable "administrator_user_login" {
+  description = "The administrator login name for the new server."
+  type = string
+}
+
+variable "database_name" {
+  description = "Specifies the name of the SQL Database"
+  type        = string
+}
+
+variable "key_vault_name" {
+  description = "The name of the Key Vault where the access the secret."
+  type        = string
+}
 variable "location" {
-  description = "Azure region to use"
+  description = "Specifies the supported Azure location where the resource exists."
   type        = string
 }
 
 variable "name" {
-  description = "variable used to name the key vault"
+  description = "Specifies the name of the SQL Server"
   type        = string
+}
+
+variable "resource_group_name" {
+  description = "The name of the resource group in which to create"
+  type        = string
+}
+
+variable "sql_server_version" {
+  description = "The version for the new server. Valid values are: 2.0 (for v11 server) and 12.0 (for v12 server)."
+  type = string
+  default = "12.0"
 }
 
 variable "tags" {
   description = "A map of tags to add"
   type        = map(string)
-}
-
-variable "resource_group_name" {
-  description = "variable used to name the resource group"
-  type        = string
-}
-
-variable "keyvault_name" {
-  description = ""
-  type        = string
-}
-
-variable "database_name" {
-  description = ""
-  type = string
 }

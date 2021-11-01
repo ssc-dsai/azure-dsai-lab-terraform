@@ -1,29 +1,25 @@
 variable "location" {
-  description = "Azure region to use"
+  description = "Specifies the supported Azure location where the resource exists."
   type        = string
 }
 
 variable "name" {
-  description = "variable used to name the key vault"
+  description = "Specifies the name of the Key Vault"
   type        = string
+}
+
+variable "resource_group_name" {
+  description = "The name of the resource group in which to create"
+  type        = string
+}
+
+variable "sku_name" {
+  description = "The Name of the SKU used for this Key Vault. Possible values are standard and premium."
+  type = string
+  default = "standard"  
 }
 
 variable "tags" {
   description = "A map of tags to add"
   type        = map(string)
 }
-
-variable "resource_group_name" {
-  description = "variable used to name the resource group"
-  type        = string
-}
-
-# variable "tenant_id" {
-#   description = "variable used to name the resource group"
-#   type        = string
-# }
-
-# variable "object_id" {
-#   description = "variable used to name the resource group"
-#   type        = string
-# }

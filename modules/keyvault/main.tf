@@ -1,10 +1,13 @@
+# ---------------------------------------------------------------------------------------------------------------------
+# Creating Azure Key Vault
+# ---------------------------------------------------------------------------------------------------------------------
 data "azurerm_client_config" "current" {}
 
-resource "azurerm_key_vault" "keyvault" {
+resource "azurerm_key_vault" "this" {
   name                = var.name
   location            = var.location
   resource_group_name = var.resource_group_name
-  sku_name            = "standard"
+  sku_name            = var.sku_name
   tenant_id           = data.azurerm_client_config.current.tenant_id
   tags                = var.tags
 
@@ -25,17 +28,4 @@ resource "azurerm_key_vault" "keyvault" {
       "Get",
     ]
   }
-}
-
-resource "random_password" "password" {
-  length           = 16
-  special          = true
-  override_special = "_%@"
-}
-
-resource "azurerm_key_vault_secret" "sql-admin-pwd-secret" {
-  name         = "sql-admin-login-password"
-  value        = random_password.password.result
-  key_vault_id = azurerm_key_vault.keyvault.id
-  depends_on = [azurerm_key_vault.keyvault]
 }
