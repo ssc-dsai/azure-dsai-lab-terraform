@@ -97,13 +97,15 @@ module "datalake" {
 module "sqlserver" {
   source = "./modules/sqlserver"
 
-  name                = "${var.prefix_lc}csa${var.group_lc}${var.user_defined_lc}${var.env}sql"
-  database_name       = "${var.prefix}-${var.group}-${var.user_defined}-${var.env}-sdb"
-  resource_group_name = module.rg.resource_group_name
-  location            = module.rg.resource_group_location
-  key_vault_name      = module.keyvault.name
-  administrator_user_login = "dsai-sql-admin"
+  name                      = "${var.prefix_lc}csa${var.group_lc}${var.user_defined_lc}${var.env}sql"
+  database_name             = "${var.prefix}-${var.group}-${var.user_defined}-${var.env}-sdb"
+  resource_group_name       = module.rg.resource_group_name
+  location                  = module.rg.resource_group_location
+  key_vault_name            = module.keyvault.name
+  administrator_user_login  = "dsai-sql-admin"
   administrator_secret_name = "sql-admin-login-password"
+  adf_ip_address            = var.adf_ip_address
+  ssc_vpn_ip_address        = var.ssc_vpn_ip_address
 
   tags = {
     env        = var.env
@@ -160,8 +162,8 @@ module "datafactory" {
   csa_connection_string = module.datalake.primary_connection_string
 
   # SQL server link
-  sql_connection_string = "Integrated Security=False;Encrypt=True;Connection Timeout=30;User ID=${module.sqlserver.administrator_login};Data Source=${module.sqlserver.server_name};Initial Catalog=${module.sqlserver.database_name}"
-  secret_name           = "sql-admin-login-password"
+  sql_connection_string = module.sqlserver.connection_string
+  secret_name           = module.sqlserver.administrator_secret_name
 
   tags = {
     env        = var.env

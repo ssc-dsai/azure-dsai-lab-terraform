@@ -17,6 +17,9 @@ resource "azurerm_data_factory" "this" {
 # Create Access policy to Key Vault
 # ---------------------------------------------------------------------------------------------------------------------
 resource "azurerm_key_vault_access_policy" "this" {
+  depends_on = [
+    azurerm_data_factory.this
+  ]
   key_vault_id = var.key_vault_id
   tenant_id    = azurerm_data_factory.this.identity.0.tenant_id
   object_id    = azurerm_data_factory.this.identity.0.principal_id

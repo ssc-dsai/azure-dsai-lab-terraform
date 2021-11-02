@@ -1,63 +1,73 @@
+variable "adf_ip_address" {
+  description = "Specifies the IP address to whitelist in the SQL Server for the Azure Data Factory"
+  type = string
+}
+
 variable "cidr" {
-  type        = string
   description = "The CIDR block for the VPC. Default value is a valid CIDR"
+  type        = string
   default = "10.0.0.0/16"
 }
 
 variable "costcenter" {
-  type        = string
   description = "cost center name to be used when tagging resources"
+  type        = string
 }
 
 variable "env" {
-  type        = string
   description = "Environment name to be used"
+  type        = string
 }
 
 variable "group" {
-  type = string
   description = "A group prefix used for all resources in this example"
+  type = string
 }
 
 variable "group_lc" {
-  type = string
   description = "A group prefix used for all resources in this example in lowercase"
+  type = string
 }
 
 variable "public_subnets" {
-  type        = list(string)
   description = "A list of public subnets inside the VPC"
+  type        = list(string)
   default     = ["10.0.1.0/24", "10.0.2.0/24"]
 }
 
 variable "private_subnets" {
-  type        = list(string)
   description = "A list of private subnets inside the VPC"
+  type        = list(string)
   default     = ["10.0.3.0/24", "10.0.4.0/24"]
 }
 
 variable "prefix" {
-  type        = string
   description = "A prefix used for all resources in this example"
+  type        = string
 }
 variable "prefix_lc" {
-  type        = string
   description = "A prefix used for all resources in this example in lowercase"
+  type        = string
 }
 
 variable "location" {
-  type        = string
   description = "The location in which all resources in this example should be provisioned"
+  type        = string
 }
 
 variable "ssn" {
-  type        = string
   description = "ssn name to be used when tagging resources"
+  type        = string
+}
+
+variable "ssc_vpn_ip_address" {
+  description = "Specifies the IP address to whitelist in the SQL Server for SSC Users"
+  type = string
 }
 
 variable "subowner" {
-  type        = string
   description = "subowner name to be used when tagging resources"
+  type        = string
 }
 
 variable "user_defined" {
@@ -66,8 +76,8 @@ variable "user_defined" {
 }
 
 variable "user_defined_lc" {
-  type        = string
   description = "the name used for all resources in this example in lowercase"
+  type        = string
 }
 
 

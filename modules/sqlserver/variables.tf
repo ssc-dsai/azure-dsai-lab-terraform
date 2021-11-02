@@ -1,3 +1,8 @@
+
+variable "adf_ip_address" {
+  description = "Specifies the IP address to whitelist in the SQL Server for the Azure Data Factory"
+  type = string
+}
 variable "administrator_secret_name" {
   description = "Specifies the name of the Key Vault Secret."
   type = string
@@ -36,6 +41,11 @@ variable "sql_server_version" {
   description = "The version for the new server. Valid values are: 2.0 (for v11 server) and 12.0 (for v12 server)."
   type = string
   default = "12.0"
+}
+
+variable "ssc_vpn_ip_address" {
+  description = "Specifies the IP address to whitelist in the SQL Server for SSC Users"
+  type = string
 }
 
 variable "tags" {

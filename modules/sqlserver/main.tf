@@ -38,6 +38,25 @@ resource "azurerm_sql_server" "this" {
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
+# Creating Azure SQL Server Firewall Rules
+# ---------------------------------------------------------------------------------------------------------------------
+resource "azurerm_sql_firewall_rule" "adf" {
+  name                = "ADF"
+  resource_group_name = var.resource_group_name
+  server_name         = azurerm_sql_server.this.name
+  start_ip_address    = var.adf_ip_address
+  end_ip_address      = var.adf_ip_address
+}
+
+resource "azurerm_sql_firewall_rule" "ssc_vpn" {
+  name                = "SSC VPN"
+  resource_group_name = var.resource_group_name
+  server_name         = azurerm_sql_server.this.name
+  start_ip_address    = var.ssc_vpn_ip_address
+  end_ip_address      = var.ssc_vpn_ip_address
+}
+
+# ---------------------------------------------------------------------------------------------------------------------
 # Creating Azure SQL Database
 # ---------------------------------------------------------------------------------------------------------------------
 
@@ -53,3 +72,4 @@ resource "azurerm_sql_database" "this" {
 
   tags = var.tags
 }
+
