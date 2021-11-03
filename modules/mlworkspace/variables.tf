@@ -9,6 +9,11 @@ variable "application_type" {
   default = "web"
 }
 
+variable "container_registry_id" {
+  description = "The ID of the container registry associated with this Machine Learning Workspace."
+  type        = string
+}
+
 variable "key_vault_id" {
   description = "The ID of key vault associated with this Machine Learning Workspace."
   type        = string

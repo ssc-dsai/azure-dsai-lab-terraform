@@ -25,9 +25,3 @@ resource "azurerm_container_registry" "this" {
     ]
   }
 }
-
-#  encryption {
-#    enabled            = true
-#    key_vault_key_id   = data.azurerm_key_vault_key.this.id
-#    identity_client_id = azurerm_user_assigned_identity.this.client_id
-#  }
