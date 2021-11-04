@@ -3,6 +3,6 @@ terraform {
     resource_group_name  = "ScSc-DSAI-Terraform-rg"
     storage_account_name = "scsccsadsaiterraformdls1"
     container_name       = "tfstate-lab"
-    key                  = "terraform.tfstate"
+    key                  = "terraform-test.tfstate"
   }
 }

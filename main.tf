@@ -28,7 +28,7 @@ module "rg" {
 module "keyvault" {
   source = "./modules/keyvault"
 
-  name                = "${var.prefix}CSV-${var.group}-${var.user_defined}-${var.env}-kv"
+  name                = "${var.prefix}CSV-${var.group}-${var.user_defined}-kv"
   resource_group_name = module.rg.resource_group_name
   location            = module.rg.resource_group_location
 
@@ -56,6 +56,7 @@ module "databricks" {
   resource_group_name = module.rg.resource_group_name
   location            = module.rg.resource_group_location
   key_vault_id        = module.keyvault.key_vault_id
+  key_vault_uri       = module.keyvault.key_vault_uri
 
   tags = {
     env        = var.env
@@ -73,7 +74,7 @@ module "databricks" {
 module "datalake" {
   source = "./modules/datalake"
 
-  name                     = "${var.prefix_lc}csa${var.group_lc}${var.user_defined_lc}${var.env}dls1"
+  name                     = "${var.prefix_lc}csa${var.group_lc}${var.user_defined_lc}dls1"
   resource_group_name      = module.rg.resource_group_name
   location                 = module.rg.resource_group_location
   allow_blob_public_access = true

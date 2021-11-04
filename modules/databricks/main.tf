@@ -18,21 +18,15 @@ resource "azurerm_databricks_workspace" "this" {
 # ---------------------------------------------------------------------------------------------------------------------
 # Create Access policy to Key Vault
 # ---------------------------------------------------------------------------------------------------------------------
-# data "azuread_service_principal" "app-system-id" {
-#   display_name = "app_service_name"
-#   depends_on   = [azurerm_databricks_workspace.this]
-# }
 
-# resource "azurerm_key_vault_access_policy" "this" {
-#   depends_on = [azurerm_databricks_workspace.this]
-#   key_vault_id = var.key_vault_id
-#   tenant_id    = azurerm_databricks_workspace.this.storage_account_identity.0.tenant_id
-#   object_id    = azurerm_databricks_workspace.this.storage_account_identity.0.principal_id
+resource "databricks_secret_scope" "kv" {
+  name = "keyvault-managed"
 
-#   secret_permissions = [
-#     "Get", "List"
-#   ]
-# }
+  keyvault_metadata {
+    resource_id = var.key_vault_id
+    dns_name = var.key_vault_uri
+  }
+}
 
 # ---------------------------------------------------------------------------------------------------------------------
 # Creating Azure Databricks Cluster

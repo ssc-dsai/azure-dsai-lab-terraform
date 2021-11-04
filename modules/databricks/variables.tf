@@ -8,6 +8,10 @@ variable "key_vault_id" {
   type        = string
 }
 
+variable "key_vault_uri" {
+  description = "The URI of the Key Vault where the access policy should be created."
+  type        = string
+}
 variable "location" {
   description = "Specifies the supported Azure location where the resource exists."
   type        = string
