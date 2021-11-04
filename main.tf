@@ -129,6 +129,8 @@ module "mlworkspace" {
 
   workspace_name        = "${var.prefix}CPS-${var.group}-${var.user_defined}-${var.env}-mlw"
   app_insights_name     = "${var.prefix_lc}cps${var.group_lc}${var.user_defined_lc}${var.env}mlw"
+  cluster_name          = "MLCluster-med"
+  vm_size               = "Standard_DS3_v2"
   resource_group_name   = module.rg.resource_group_name
   location              = module.rg.resource_group_location
   key_vault_id          = module.keyvault.key_vault_id
