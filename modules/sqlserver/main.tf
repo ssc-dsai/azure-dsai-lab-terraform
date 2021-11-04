@@ -7,9 +7,12 @@ data "azurerm_key_vault" "this" {
 }
 
 resource "random_password" "this" {
-  length           = 16
-  special          = true
-  override_special = "_%@"
+  length            = 16
+  upper             = true
+  lower             = true
+  special           = true
+  number            = true
+  override_special  = "@"
 }
 
 resource "azurerm_key_vault_secret" "this" {

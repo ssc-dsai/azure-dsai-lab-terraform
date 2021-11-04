@@ -1,3 +1,8 @@
+variable "access_key_secret_name" {
+  description = "Defines the storage account access key secret name."
+  type = string
+}
+
 variable "account_kind" {
   description = "Defines the Kind of account. Valid options are BlobStorage, BlockBlobStorage, FileStorage, Storage and StorageV2."
   type = string
@@ -22,6 +27,11 @@ variable "allow_blob_public_access" {
   default = false
 }
 
+variable "key_vault_id" {
+  description = "The ID of the Key Vault where the access policy should be created."
+  type        = string
+}
+
 variable "location" {
   description = "Specifies the supported Azure location where the resource exists."
   type        = string
@@ -37,7 +47,19 @@ variable "resource_group_name" {
   type        = string
 }
 
+variable "subscription_id_secret_name" {
+  description = "Defines the Subcription ID secret name."
+  type = string
+  default = "subscription-id"
+}
+
 variable "tags" {
   description = "A map of tags to add"
   type        = map(string)
+}
+
+variable "tenant_id_secret_name" {
+  description = "Defines the Tenant ID secret name."
+  type = string
+  default = "tenant-id"
 }

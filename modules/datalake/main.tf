@@ -1,4 +1,9 @@
 # ---------------------------------------------------------------------------------------------------------------------
+# Data
+# ---------------------------------------------------------------------------------------------------------------------
+data "azurerm_client_config" "current" {}
+
+# ---------------------------------------------------------------------------------------------------------------------
 # Creating Azure Storage Account
 # ---------------------------------------------------------------------------------------------------------------------
 resource "azurerm_storage_account" "this" {
@@ -11,4 +16,34 @@ resource "azurerm_storage_account" "this" {
   allow_blob_public_access = var.allow_blob_public_access
 
   tags = var.tags
+}
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Store the Storage Account access key in Azure Key Vault
+# ---------------------------------------------------------------------------------------------------------------------
+
+resource "azurerm_key_vault_secret" "this" {
+  name         = var.access_key_secret_name
+  value        = azurerm_storage_account.this.primary_access_key
+  key_vault_id = var.key_vault_id
+}
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Store the current Subscription ID in Azure Key Vault
+# ---------------------------------------------------------------------------------------------------------------------
+
+resource "azurerm_key_vault_secret" "subscription_id_secret_name" {
+  name         = var.subscription_id_secret_name
+  value        = data.azurerm_client_config.current.subscription_id
+  key_vault_id = var.key_vault_id
+}
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Store the current Tenant ID in Azure Key Vault
+# ---------------------------------------------------------------------------------------------------------------------
+
+resource "azurerm_key_vault_secret" "tenant_id_secret_name" {
+  name         = var.tenant_id_secret_name
+  value        = data.azurerm_client_config.current.tenant_id
+  key_vault_id = var.key_vault_id
 }

@@ -14,20 +14,6 @@ resource "azurerm_databricks_workspace" "this" {
   tags = var.tags
 }
 
-
-# ---------------------------------------------------------------------------------------------------------------------
-# Create Access policy to Key Vault
-# ---------------------------------------------------------------------------------------------------------------------
-
-resource "databricks_secret_scope" "kv" {
-  name = "keyvault-managed"
-
-  keyvault_metadata {
-    resource_id = var.key_vault_id
-    dns_name = var.key_vault_uri
-  }
-}
-
 # ---------------------------------------------------------------------------------------------------------------------
 # Creating Azure Databricks Cluster
 # ---------------------------------------------------------------------------------------------------------------------
@@ -50,5 +36,22 @@ resource "databricks_cluster" "main" {
   autoscale {
     min_workers = 1
     max_workers = 2
+  }
+}
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Create Access policy to Key Vault
+# ---------------------------------------------------------------------------------------------------------------------
+
+resource "databricks_secret_scope" "kv" {
+  depends_on = [
+    azurerm_databricks_workspace.this,
+    databricks_cluster.main
+  ]
+  name = "keyvault-managed"
+
+  keyvault_metadata {
+    resource_id = var.key_vault_id
+    dns_name = var.key_vault_uri
   }
 }

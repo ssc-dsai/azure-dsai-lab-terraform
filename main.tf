@@ -74,11 +74,12 @@ module "databricks" {
 module "datalake" {
   source = "./modules/datalake"
 
-  name                     = "${var.prefix_lc}csa${var.group_lc}${var.user_defined_lc}dls1"
-  resource_group_name      = module.rg.resource_group_name
-  location                 = module.rg.resource_group_location
-  allow_blob_public_access = true
-
+  name                      = "${var.prefix_lc}csa${var.group_lc}${var.user_defined_lc}dls1"
+  resource_group_name       = module.rg.resource_group_name
+  location                  = module.rg.resource_group_location
+  allow_blob_public_access  = true
+  access_key_secret_name    = "storage-account-access-key"
+  key_vault_id              = module.keyvault.key_vault_id
 
   tags = {
     env        = var.env
@@ -87,7 +88,7 @@ module "datalake" {
     subowner   = var.subowner
   }
 
-  depends_on = [module.rg]
+  depends_on = [module.rg, module.keyvault]
 
 }
 
