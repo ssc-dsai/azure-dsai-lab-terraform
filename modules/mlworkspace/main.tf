@@ -26,6 +26,10 @@ resource "azurerm_machine_learning_workspace" "this" {
   }
 }
 
+# ---------------------------------------------------------------------------------------------------------------------
+# Creating Azure Machine Learning Cluster
+# ---------------------------------------------------------------------------------------------------------------------
+
 resource "azurerm_machine_learning_compute_cluster" "test" {
   name                          = var.cluster_name
   location                      = var.location
