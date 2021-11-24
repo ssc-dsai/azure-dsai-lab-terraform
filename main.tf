@@ -90,7 +90,7 @@ module "datalake" {
   resource_group_name      = module.resource_group.resource_group_name
   location                 = module.resource_group.resource_group_location
   allow_blob_public_access = true
-  access_key_secret_name   = "storage-account-access-key"
+  access_key_secret_name   = var.access_key_secret_name
   key_vault_id             = module.key_vault.key_vault_id
 
   tags = {
@@ -117,7 +117,7 @@ module "sql_server" {
   location                  = module.resource_group.resource_group_location
   key_vault_name            = module.key_vault.name
   administrator_user_login  = "dsai-sql-admin"
-  administrator_secret_name = "sql-admin-login-password"
+  administrator_secret_name = var.administrator_secret_name
   adf_ip_address            = var.adf_ip_address
   ssc_vpn_ip_address        = var.ssc_vpn_ip_address
 

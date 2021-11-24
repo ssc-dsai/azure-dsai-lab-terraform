@@ -16,6 +16,10 @@ user_defined_lc = "lab"
 #Location
 location = "Canada Central"
 
+#Secret Names
+access_key_secret_name   = "storage-account-access-key"
+administrator_secret_name = "sql-admin-login-password"
+
 #Tags
 costcenter      = "666111"
 env             = "dev"

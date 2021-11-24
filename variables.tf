@@ -1,5 +1,15 @@
+variable "access_key_secret_name" {
+  description = "Specifies the name of the secret name key for the Datalake"
+  type = string
+}
+
 variable "adf_ip_address" {
   description = "Specifies the IP address to whitelist in the SQL Server for the Azure Data Factory"
+  type = string
+}
+
+variable "administrator_secret_name" {
+  description = "Specifies the name of the secret name key for the SQL server password"
   type = string
 }
 
