@@ -1,0 +1,23 @@
+#IPs
+cidr = "10.0.0.0/16"
+public_subnets  = ["10.0.1.0/24", "10.0.2.0/24"]
+private_subnets = ["10.0.3.0/24", "10.0.4.0/24"]
+adf_ip_address = "0.0.0.0"
+ssc_vpn_ip_address = "0.0.0.0"
+
+#Names
+prefix = "ScSc"
+prefix_lc = "scsc"
+group = "DSAI"
+group_lc = "dsai"
+user_defined = "Lab"
+user_defined_lc = "lab"
+
+#Location
+location = "Canada Central"
+
+#Tags
+costcenter      = "666111"
+env             = "dev"
+ssn             = "DSAI"
+subowner        = "CTOB-DE-DSAI"

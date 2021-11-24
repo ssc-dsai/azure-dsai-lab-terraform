@@ -203,7 +203,6 @@ module "container_registry" {
   name                = "${var.prefix_lc}cps${var.group_lc}${var.user_defined_lc}${var.env}acr"
   resource_group_name = module.resource_group.resource_group_name
   location            = module.resource_group.resource_group_location
-  key_vault_id        = module.key_vault.key_vault_id
 
   tags = {
     env        = var.env
